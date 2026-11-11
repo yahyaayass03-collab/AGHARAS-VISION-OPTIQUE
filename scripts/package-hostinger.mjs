@@ -45,7 +45,7 @@ delete packageJson.scripts["db:seed"];
 delete packageJson.scripts["db:seed:test-reset"];
 delete packageJson.scripts["package:hostinger"];
 entries["package.json"] = new TextEncoder().encode(`${JSON.stringify(packageJson, null, 2)}\n`);
-for (const file of ["package-lock.json", "next.config.ts", "next-env.d.ts", "tsconfig.json", "postcss.config.mjs", "tailwind.config.ts", ".nvmrc", ".env.example"]) {
+for (const file of ["package-lock.json", "next.config.ts", "next-env.d.ts", "tsconfig.json", "postcss.config.mjs", ".npmrc", ".nvmrc", ".env.example"]) {
   await addFile(file);
 }
 await addTree("src");

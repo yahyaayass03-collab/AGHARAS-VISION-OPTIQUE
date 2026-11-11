@@ -22,7 +22,7 @@ Système de design : `haute_lunetterie_ditoriale/DESIGN.md` (« Haute Lunetterie
 | 13 | `agharas_vision_optique_foire_aux_questions` | `screen.png` | `code.html` | `/faq` | Implémenté |
 | 14 | `agharas_vision_optique_informations_livraison_mentions_l_gales` | `screen.png` | `code.html` | `/livraison`, `/retours`, `/confidentialite`, `/cgv`, `/mentions-legales` | Implémenté |
 | 15 | `agharas_vision_optique_nos_boutiques_salons_priv_s` | `screen.png` | `code.html` | `/boutiques` | Implémenté |
-| — | `haute_lunetterie_ditoriale/DESIGN.md` | — | Tokens | `tailwind.config.ts`, `globals.css` | Implémenté |
+| — | `haute_lunetterie_ditoriale/DESIGN.md` | — | Tokens | `src/app/globals.css` (`@theme`) | Implémenté |
 
 > Tous les écrans listés sont implémentés. Les captures PNG sont conservées
 > comme référence visuelle ; la fidélité a été reconstruite à partir du balisage

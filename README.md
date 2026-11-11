@@ -56,7 +56,7 @@ propriétaire sont initialisés séparément selon le guide.
 | Framework | Next.js (App Router, Server Actions, RSC) | `15.5.28` |
 | UI | React | `19.3.1` |
 | Langage | TypeScript (`strict`, `noUncheckedIndexedAccess`) | `5.9.3` |
-| Styles | Tailwind CSS (+ tokens du design Stitch) | `3.4.19` |
+| Styles | Tailwind CSS (tokens CSS `@theme`, plugin `@tailwindcss/postcss`) | `4.3.5` |
 | Base de données cible | MariaDB (`provider = "mysql"`) | 11.4.8 local; Hostinger non vérifié |
 | ORM | Prisma | `6.19.3` |
 | Validation | Zod | `4.6.7` |

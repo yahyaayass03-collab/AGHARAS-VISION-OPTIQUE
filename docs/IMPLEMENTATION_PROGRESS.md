@@ -94,7 +94,7 @@ Dernière mise à jour : **28 octobre 2026**
 ### M1 — Socle technique et données ✅
 
 - Next.js 15 App Router, React 19, TypeScript strict
-  (`noUncheckedIndexedAccess`), Tailwind 3, Prisma 6, Zod, bcryptjs.
+  (`noUncheckedIndexedAccess`), Tailwind 4, Prisma 6, Zod, bcryptjs.
 - Schéma : **35 modèles**, **13 énumérations** (`prisma/schema.prisma`),
   montants en **centimes entiers** (`Int`), snapshots de commande conservés.
 - Seed de démonstration : 12 produits, 6 catégories, 5 marques, catalogue de

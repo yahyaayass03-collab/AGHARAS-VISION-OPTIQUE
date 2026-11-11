@@ -69,7 +69,7 @@ export async function AuthShell({
               sizes="(max-width: 768px) 90vw, 512px"
               className="object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-linear-to-t/srgb from-black/25 via-transparent to-transparent" />
             <div className="absolute bottom-2 left-3 right-3 flex items-center justify-between gap-2">
               <span className="bg-white/90 px-2 py-0.5 text-[0.55rem] uppercase tracking-[0.18em] text-primary">
                 Haute Lunetterie

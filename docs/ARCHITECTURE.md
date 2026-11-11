@@ -286,7 +286,7 @@ toute sortie du répertoire configuré (protection contre le path traversal).
 
 ## 11. Design system et fidélité Stitch
 
-- Tokens définis dans `tailwind.config.ts` et `globals.css` : vert profond
+- Tokens Tailwind 4 définis par `@theme` dans `src/app/globals.css` : vert profond
   `#2E4243`, or `#CFB56A`, blanc, off-white `#F7F8F6`, typographies Bodoni Moda
   (titres) et Hanken Grotesk (texte).
 - Les écrans ont été reconstruits depuis les `code.html` des exports Stitch

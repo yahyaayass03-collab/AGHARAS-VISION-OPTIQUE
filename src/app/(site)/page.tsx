@@ -263,7 +263,7 @@ export default async function HomePage() {
       {settings["home.optical_visible"] !== "false" && <section className="border-b border-outline-variant bg-white py-14 lg:py-20">
         <div className="canvas">
           <div className="relative border border-outline-variant bg-surface-dim p-6 md:p-12">
-            <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary via-gold to-primary" />
+            <div className="absolute inset-x-0 top-0 h-1 bg-linear-to-r/srgb from-primary via-gold to-primary" />
             <div className="grid items-center gap-10 lg:grid-cols-12">
               <div className="lg:col-span-7">
                 <p className="eyebrow mb-2 tracking-[0.22em]">
