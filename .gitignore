@@ -1,0 +1,67 @@
+# Dépendances
+node_modules/
+
+# Next.js
+.next/
+.next-*/
+out/
+next-env.d.ts
+tsconfig.tsbuildinfo
+
+# Variables d'environnement (secrets locaux)
+.env
+.env.*
+!.env.example
+
+# Base de données locale
+*.db
+*.db-journal
+
+# Stockage privé (ordonnances, fichiers sensibles)
+storage/
+/backups/
+*.dump
+*.backup
+*.bak
+*.pdb
+
+# Tests
+coverage/
+playwright-report/
+test-results/
+tests/e2e/.auth/
+tests/audit/.auth/
+audit-report/
+.next-perf-dev/
+.next-perf-prod/
+.next-perf-e2e/
+.next-techstaging-dev/
+.next-techstaging-prod/
+.next-techstaging-e2e/
+.next-emergency-*/
+.playwright-browsers/
+.wrangler/
+
+# Divers
+.DS_Store
+Thumbs.db
+*.log
+/dist/
+.vinext/
+.cloudflare/
+
+# Caches et résultats locaux, exclus des déploiements Git Hostinger
+/.npm-cache/
+/.tmp/
+/artifacts/
+
+# Sources graphiques originales (les fichiers servis sont dans public/)
+/assets/pexels-originals/
+/pics/
+/stitch_agharas_vision_optical_e_commerce/
+
+# Identifiants et clés privées
+*.pem
+*.key
+*.p12
+*.pfx

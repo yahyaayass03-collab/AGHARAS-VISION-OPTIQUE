@@ -1,0 +1,232 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-surface text-primary font-sans antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: rgba(207, 181, 106, 0.28);
+    color: #182c2d;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-serif font-normal text-primary;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  a,
+  button,
+  input,
+  select,
+  textarea,
+  summary {
+    @apply outline-none;
+  }
+
+  :focus-visible {
+    outline: 2px solid #cfb56a;
+    outline-offset: 2px;
+  }
+
+  input[type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+  }
+
+  summary {
+    cursor: pointer;
+    list-style: none;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  img {
+    @apply max-w-full;
+  }
+}
+
+@layer components {
+  .canvas {
+    @apply mx-auto w-full max-w-canvas px-5 md:px-8 lg:px-12;
+  }
+
+  .rule {
+    @apply border-t border-outline-variant;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 text-label uppercase tracking-editorial transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-primary {
+    @apply btn border border-primary bg-primary text-white hover:bg-primary-container hover:border-primary-container;
+  }
+
+  .btn-outline {
+    @apply btn border border-primary bg-transparent text-primary hover:bg-primary hover:text-white;
+  }
+
+  .btn-quiet {
+    @apply btn border border-outline-variant bg-surface text-primary hover:border-primary;
+  }
+
+  .btn-gold {
+    @apply btn border border-gold bg-gold text-primary hover:bg-[#dcc37c];
+  }
+
+  .btn-sm {
+    @apply px-4 py-2 text-[0.625rem];
+  }
+
+  .label {
+    @apply font-sans text-label uppercase tracking-editorial;
+  }
+
+  .eyebrow {
+    @apply label text-secondary;
+  }
+
+  .field {
+    @apply w-full border border-outline-variant bg-white px-3.5 py-2.5 text-body-md text-primary transition-colors placeholder:text-outline focus:border-primary focus:ring-0;
+  }
+
+  .field-error {
+    @apply border-error;
+  }
+
+  .field-label {
+    @apply mb-1.5 block text-label uppercase tracking-[0.12em] text-on-surface-variant;
+  }
+
+  .field-hint {
+    @apply mt-1 text-body-sm text-on-surface-variant;
+  }
+
+  .field-error-text {
+    @apply mt-1 text-body-sm text-error;
+  }
+
+  .card-editorial {
+    @apply border border-outline-variant bg-white;
+  }
+
+  .badge {
+    @apply inline-flex items-center border border-outline-variant bg-surface-dim px-2.5 py-1 text-[0.625rem] uppercase tracking-[0.12em] text-primary;
+  }
+
+  .badge-gold {
+    @apply inline-flex items-center border border-gold/60 bg-gold/15 px-2.5 py-1 text-[0.625rem] uppercase tracking-[0.12em] text-secondary;
+  }
+
+  .badge-success {
+    @apply inline-flex items-center border border-success/30 bg-success/10 px-2.5 py-1 text-[0.625rem] uppercase tracking-[0.12em] text-success;
+  }
+
+  .badge-error {
+    @apply inline-flex items-center border border-error/30 bg-error-container px-2.5 py-1 text-[0.625rem] uppercase tracking-[0.12em] text-error;
+  }
+
+  .link-underline {
+    @apply underline decoration-outline-variant decoration-1 underline-offset-4 transition-colors hover:decoration-primary;
+  }
+
+  .table-admin {
+    @apply w-full border-collapse text-left text-body-sm;
+  }
+  .table-admin th {
+    @apply border-b border-outline-variant bg-surface-dim px-3 py-2.5 text-[0.625rem] uppercase tracking-[0.12em] text-on-surface-variant;
+  }
+  .table-admin td {
+    @apply border-b border-outline-variant/70 px-3 py-3 align-middle;
+  }
+
+  .admin-card {
+    @apply border border-outline-variant bg-white p-5;
+  }
+
+  .admin-title {
+    @apply font-serif text-2xl text-primary;
+  }
+
+  .admin-input {
+    @apply w-full border border-outline-variant bg-white px-3 py-2 text-body-sm text-primary focus:border-primary;
+  }
+
+  .legal-prose {
+    @apply text-body-md leading-relaxed text-on-surface-variant;
+  }
+  .legal-prose h2 {
+    @apply mt-10 mb-3 font-serif text-2xl text-primary;
+  }
+  .legal-prose h3 {
+    @apply mt-6 mb-2 font-serif text-lg text-primary;
+  }
+  .legal-prose p {
+    @apply mb-4;
+  }
+  .legal-prose ul {
+    @apply mb-4 list-disc space-y-1 pl-5;
+  }
+  .legal-prose strong {
+    @apply font-medium text-primary;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+  .animate-fade-in {
+    animation: fade-in 320ms ease-out both;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

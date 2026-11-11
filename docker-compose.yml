@@ -1,0 +1,26 @@
+# Optional local MariaDB service for development only; never used in production.
+# The verified conversion tests used the native disposable MariaDB server on 3307.
+# This separate compose port avoids conflicts with either local server.
+services:
+  mariadb:
+    image: mariadb:11.4
+    container_name: agharas-mariadb-dev
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: agharas_dev
+      MARIADB_USER: agharas
+      MARIADB_PASSWORD: agharas_dev_local_only
+      MARIADB_ROOT_PASSWORD: agharas_root_local_only
+    ports:
+      - "3308:3306"
+    volumes:
+      - agharas_mariadb_data:/var/lib/mysql
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  agharas_mariadb_data:

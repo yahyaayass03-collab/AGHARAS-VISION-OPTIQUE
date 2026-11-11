@@ -1,0 +1,73 @@
+{
+  "name": "agharas-vision-optique",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Plateforme e-commerce optique AGHARAS VISION OPTIQUE (Maroc)",
+  "engines": {
+    "node": ">=22.23.0 <23"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "node scripts/build.mjs",
+    "start": "next start",
+    "typecheck": "next typegen && tsc --noEmit",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate dev",
+    "db:deploy": "node scripts/safe-migrate.mjs",
+    "db:migrate:safe": "node scripts/safe-migrate.mjs",
+    "db:seed": "tsx prisma/seed.ts",
+    "owner:provision": "tsx prisma/provision-owner.ts",
+    "db:seed:test-reset": "tsx prisma/seed.ts --reset-test",
+    "package:hostinger": "node scripts/package-hostinger.mjs",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "test:audit": "playwright test --config playwright.audit.config.ts",
+    "dev:vinext": "vite dev --port 3001",
+    "build:vinext": "vite build",
+    "start:vinext": "vite preview",
+    "deploy:vinext": "vinext-cloudflare deploy"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "3.1162.0",
+    "@prisma/client": "6.19.3",
+    "bcryptjs": "3.0.3",
+    "clsx": "2.1.1",
+    "next": "15.5.28",
+    "nodemailer": "10.3.1",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "sharp": "0.35.5",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "1.67.0",
+    "@playwright/test": "1.64.1",
+    "@types/node": "22.15.3",
+    "@types/react": "19.1.2",
+    "@types/react-dom": "19.1.2",
+    "@vinext/cloudflare": "1.3.1",
+    "@vitejs/plugin-rsc": "0.5.38",
+    "autoprefixer": "10.4.21",
+    "cf": "1.0.0-beta.27",
+    "fflate": "0.7.5",
+    "postcss": "8.5.32",
+    "prisma": "6.19.3",
+    "react-server-dom-webpack": "19.3.1",
+    "tailwindcss": "3.4.19",
+    "tsx": "4.20.3",
+    "typescript": "5.9.3",
+    "vinext": "1.4.1",
+    "vite": "8.3.5",
+    "vitest": "5.1.0"
+  },
+  "type": "module",
+  "overrides": {
+    "postcss": "8.5.32",
+    "@prisma/config": {
+      "deepmerge-ts": "8.0.0"
+    },
+    "fflate": "0.7.5"
+  }
+}
