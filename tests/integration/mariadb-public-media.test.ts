@@ -36,9 +36,9 @@ describe("MariaDB-backed owner public media", () => {
     expect(id).toBeTruthy();
     try {
       const persisted = await restartedClient.publicMediaObject.findUnique({
-        where: { id: id! }, select: { mimeType: true, byteLength: true, data: true },
+        where: { id: id! }, select: { mimeType: true, byteLength: true, data: true, isDeleted: true },
       });
-      expect(persisted).toMatchObject({ mimeType: "image/webp", byteLength: expect.any(Number) });
+      expect(persisted).toMatchObject({ mimeType: "image/webp", byteLength: expect.any(Number), isDeleted: false });
       expect(persisted!.data.length).toBe(persisted!.byteLength);
 
       const served = await readPublicImage(`${id}.webp`);
@@ -48,7 +48,8 @@ describe("MariaDB-backed owner public media", () => {
     } finally {
       await deletePublicImageObject(`${id}.webp`);
     }
-    expect(await restartedClient.publicMediaObject.findUnique({ where: { id: id! }, select: { id: true } })).toBeNull();
+    expect(await restartedClient.publicMediaObject.findUnique({ where: { id: id! }, select: { isDeleted: true, byteLength: true } }))
+      .toMatchObject({ isDeleted: true, byteLength: 0 });
     expect((await db.publicMediaQuota.findUnique({ where: { id: "public-media" } }))?.bytesUsed).toBe(0);
   });
 });

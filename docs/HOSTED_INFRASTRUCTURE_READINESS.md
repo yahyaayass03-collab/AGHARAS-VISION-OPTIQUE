@@ -41,9 +41,9 @@ No automated retention policy, hosted backup, SMTP provider delivery, provider-s
 
 ### Existing design
 
-- `src/lib/object-storage.ts` is the one server-only storage adapter. It selects local filesystem or S3-compatible storage with `OBJECT_STORAGE_DRIVER` and namespaces object keys as `public-media/` or `prescriptions/`.
+- `src/lib/object-storage.ts` remains the server-only filesystem/S3 adapter for private prescription documents and legacy public media. New owner-managed public images may instead use MariaDB BLOB storage via `PUBLIC_MEDIA_STORAGE_DRIVER=mariadb`.
 - `src/lib/uploads.ts` permits PDF/JPEG/PNG/HEIC prescriptions up to 10 MiB, checks file signatures, generates an opaque random filename, and sanitizes the display name.
-- `src/lib/public-media.ts` permits JPEG/PNG/WebP up to 5 MiB, checks signatures, and returns an application route URL. There is no direct S3 URL in the database/application response.
+- `src/lib/public-media.ts` decodes JPEG/PNG/WebP, caps source dimensions/bytes, re-encodes bounded WebP, and returns a versioned application route URL. MariaDB BLOB reads are isolated to the image route, not ordinary product queries; Hostinger durability remains unverified.
 - `src/app/api/ordonnances/[id]/route.ts` requires an authenticated owner before looking up and reading the document. It responds as an attachment with `private, no-store, max-age=0`, `nosniff`, and a restrictive CSP. Anonymous access is covered by the acceptance suite.
 - `src/app/api/media/[name]/route.ts` only serves strict generated image names and is intentionally public.
 - Filesystem production paths must be absolute; durable persistence is an operator/host requirement. S3 key reads/writes use the configured bucket and private-by-default object commands.
@@ -106,7 +106,8 @@ Use separate secret scopes and isolated staging/production databases. Required v
 | Environment and canonical origin | `APP_ENVIRONMENT=staging` (or production), `NEXT_PUBLIC_SITE_URL=https://<owner-provided-origin>` at build and runtime. No domain was supplied. |
 | Database | `DATABASE_URL` remote PostgreSQL URL with `sslmode=require`, `verify-ca`, or `verify-full`; distinct staging credentials/schema/database. `TEST_DATABASE_URL` must not exist on host. |
 | Authentication/owner | `AUTH_SECRET` at least 32 random bytes, unique, secret-manager-only; `OWNER_EMAIL` owner-approved; no `SEED_*` or `OWNER_PASSWORD` host variables. Provision account out of band. |
-| Files | `OBJECT_STORAGE_DRIVER=filesystem` with durable absolute `PRESCRIPTION_STORAGE_DIR` and `PUBLIC_MEDIA_DIR`, or `OBJECT_STORAGE_DRIVER=s3` with `OBJECT_STORAGE_BUCKET`, `OBJECT_STORAGE_REGION`, optional HTTPS `OBJECT_STORAGE_ENDPOINT`, plus IAM identity or both `OBJECT_STORAGE_ACCESS_KEY_ID`/`OBJECT_STORAGE_SECRET_ACCESS_KEY`. |
+| Owner public images | `PUBLIC_MEDIA_STORAGE_DRIVER=mariadb` with a quota `PUBLIC_MEDIA_MAX_TOTAL_BYTES` chosen from the verified DB allowance; or the existing object mode. No Hostinger MariaDB quota/backup test has been run. |
+| Private prescription files | Existing runtime currently requires `OBJECT_STORAGE_DRIVER=s3`, bucket/region, optional HTTPS endpoint and provider identity or paired credentials; alternatively a Hostinger private persistent filesystem must first be verified. This is separate from public image BLOBs. |
 | Email | `EMAIL_TRANSPORT=discard` only for staging with no send workflows, or `smtp` plus approved `EMAIL_FROM`, `SMTP_HOST`, `SMTP_PORT`, optional paired `SMTP_USER`/`SMTP_PASSWORD`. |
 | Operations | `LOG_LEVEL` is presently unused; `ERROR_MONITORING_DSN` is presently unused. Do not treat either as an active integration. Configure host logging/monitoring only after approval. |
 | Indexing/access | Build `APP_ENVIRONMENT=staging` to add noindex response header. Add host/edge authentication or network controls; robots/noindex alone does not keep staging private. |

@@ -93,8 +93,9 @@ export async function readPublicImage(name: string): Promise<PublicImage | null>
   if (STORAGE_MODE() === "mariadb") {
     const stored = await db.publicMediaObject.findUnique({
       where: { id },
-      select: { data: true, mimeType: true, sha256: true },
+      select: { data: true, mimeType: true, sha256: true, isDeleted: true },
     });
+    if (stored?.isDeleted) return null;
     if (stored) return { bytes: Buffer.from(stored.data), mimeType: stored.mimeType, etag: `"${stored.sha256}"` };
     // Keeps URLs created by the previous filesystem/S3 adapter working during
     // a controlled migration; new uploads always use MariaDB in this mode.
@@ -111,9 +112,12 @@ export async function deletePublicImageObject(name: string): Promise<void> {
   const id = name.slice(0, -5);
   if (STORAGE_MODE() === "mariadb") {
     await db.$transaction(async (tx) => {
-      const existing = await tx.publicMediaObject.findUnique({ where: { id }, select: { byteLength: true } });
-      if (!existing) return;
-      await tx.publicMediaObject.delete({ where: { id } });
+      const existing = await tx.publicMediaObject.findUnique({ where: { id }, select: { byteLength: true, isDeleted: true } });
+      if (!existing || existing.isDeleted) return;
+      await tx.publicMediaObject.update({
+        where: { id },
+        data: { isDeleted: true, data: Buffer.alloc(0), byteLength: 0 },
+      });
       const released = await tx.publicMediaQuota.updateMany({
         where: { id: QUOTA_ROW_ID, bytesUsed: { gte: existing.byteLength } },
         data: { bytesUsed: { decrement: existing.byteLength } },

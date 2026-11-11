@@ -316,6 +316,7 @@ model PublicMediaObject {
   sha256    String   @db.Char(64)
   byteLength Int
   data      Bytes    @db.MediumBlob
+  isDeleted Boolean  @default(false)
   createdAt DateTime @default(now())
 
   @@index([createdAt])

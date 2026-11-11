@@ -58,12 +58,12 @@ describe("MariaDB public media storage", () => {
   it("loads a single image BLOB only by requested media id and returns its stored digest", async () => {
     vi.stubEnv("PUBLIC_MEDIA_STORAGE_DRIVER", "mariadb");
     const bytes = Buffer.from("synthetic-webp");
-    state.findUnique.mockResolvedValue({ data: bytes, mimeType: "image/webp", sha256: "a".repeat(64) });
+    state.findUnique.mockResolvedValue({ data: bytes, mimeType: "image/webp", sha256: "a".repeat(64), isDeleted: false });
     const image = await readPublicImage(`${"b".repeat(32)}.webp`);
     expect(image).toEqual({ bytes, mimeType: "image/webp", etag: `"${"a".repeat(64)}"` });
     expect(state.findUnique).toHaveBeenCalledWith({
       where: { id: "b".repeat(32) },
-      select: { data: true, mimeType: true, sha256: true },
+      select: { data: true, mimeType: true, sha256: true, isDeleted: true },
     });
   });
 

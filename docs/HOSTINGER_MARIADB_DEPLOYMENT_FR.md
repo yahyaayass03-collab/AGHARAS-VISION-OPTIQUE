@@ -31,7 +31,7 @@ Remplacer l'hôte, le port, l'utilisateur et le nom par les valeurs hPanel. Enco
 
 ### Images propriétaire et CMS
 
-Pour les images téléversées par le propriétaire, la solution locale ajoutée utilise les BLOB MariaDB : `PUBLIC_MEDIA_STORAGE_DRIVER=mariadb` et `PUBLIC_MEDIA_MAX_TOTAL_BYTES` configuré d'après le quota hPanel réellement confirmé. Deux migrations additives créent la table dédiée et son compteur; elles ne remplacent pas une sauvegarde ni la vérification de cible. Les images ne sont pas exposées comme fichiers dans `public_html`; la route applicative ne sert que les identifiants d'images publiques.
+Pour les images téléversées par le propriétaire, la solution locale ajoutée utilise les BLOB MariaDB : `PUBLIC_MEDIA_STORAGE_DRIVER=mariadb` et `PUBLIC_MEDIA_MAX_TOTAL_BYTES` configuré d'après le quota hPanel réellement confirmé. Trois migrations additives créent la table dédiée, son compteur et le marqueur de suppression; elles ne remplacent pas une sauvegarde ni la vérification de cible. Les images ne sont pas exposées comme fichiers dans `public_html`; la route applicative ne sert que les identifiants d'images publiques.
 
 Le volume filesystem Hostinger n'a pas été vérifié. Ne pas compter sur un chemin de File Manager, `hbuilds` ou `public_html` pour la persistance. Voir [`HOSTINGER_MARIADB_IMAGE_STORAGE.md`](HOSTINGER_MARIADB_IMAGE_STORAGE.md) pour les variables runtime complètes, quotas/impact sauvegarde et le test obligatoire de redémarrage puis de vrai redéploiement sur staging. Ce test Hostinger reste à effectuer.
 

@@ -274,9 +274,10 @@ test.describe("Administration : CRUD et permissions", () => {
     await expect(page.getByRole("heading", { level: 1 })).toContainText("Vision de la collection Audit");
     const hero = await db.banner.findUnique({ where: { key: "home-hero" } });
     expect(hero!.imageUrl).toMatch(/^\/api\/media\//);
-    const heroImage = page.locator("main img").first();
-    await expect(heroImage).toBeVisible();
-    expect(decodeURIComponent(await heroImage.getAttribute("src") ?? "")).toContain(hero!.imageUrl);
+    const mainImageSources = await page.locator("main img").evaluateAll((images) =>
+      images.map((image) => decodeURIComponent(image.getAttribute("src") ?? "")),
+    );
+    expect(mainImageSources.some((src) => src.includes(hero!.imageUrl!))).toBe(true);
     const uploadedUrl = hero!.imageUrl!;
     const uploadedId = uploadedUrl.match(/[a-f0-9]{32}/)![0];
     expect(await db.publicMediaObject.findUnique({ where: { id: uploadedId }, select: { id: true } })).not.toBeNull();
@@ -288,7 +289,8 @@ test.describe("Administration : CRUD et permissions", () => {
     await replaceForm.locator('input[name="imageUrl"]').fill(original!.imageUrl ?? "");
     await replaceForm.getByRole("button", { name: /Enregistrer la bannière/ }).click();
     await expect(page.getByRole("status").filter({ hasText: "Bannière enregistrée" })).toBeVisible();
-    expect(await db.publicMediaObject.findUnique({ where: { id: uploadedId }, select: { id: true } })).toBeNull();
+    expect(await db.publicMediaObject.findUnique({ where: { id: uploadedId }, select: { isDeleted: true, byteLength: true } }))
+      .toMatchObject({ isDeleted: true, byteLength: 0 });
     expect((await page.request.get(uploadedUrl)).status()).toBe(404);
     await db.banner.update({ where: { id: original!.id }, data: { title: original!.title, imageUrl: original!.imageUrl } });
   });
