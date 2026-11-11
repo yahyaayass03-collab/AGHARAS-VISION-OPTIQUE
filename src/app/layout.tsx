@@ -1,22 +1,7 @@
 import type { Metadata, Viewport } from "next";
-import { Bodoni_Moda, Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
 import { SITE } from "@/lib/constants";
 import { getSettings } from "@/lib/settings";
-
-const bodoni = Bodoni_Moda({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-bodoni",
-  display: "swap",
-});
-
-const hanken = Hanken_Grotesk({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-hanken",
-  display: "swap",
-});
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSettings();
@@ -58,7 +43,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="fr" className={`${bodoni.variable} ${hanken.variable}`}>
+    <html lang="fr">
       <body>
         <a
           href="#contenu"

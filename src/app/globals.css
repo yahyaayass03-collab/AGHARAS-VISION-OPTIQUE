@@ -1,6 +1,11 @@
 @import "tailwindcss" source(none);
 @source "../";
 
+:root {
+  --font-bodoni: "Bodoni Moda", "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  --font-hanken: "Hanken Grotesk", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+
 @theme {
   --color-primary: #182c2d;
   --color-primary-container: #2e4243;
@@ -50,8 +55,8 @@
 }
 
 @theme inline {
-  --font-serif: var(--font-bodoni), "Bodoni Moda", Georgia, serif;
-  --font-sans: var(--font-hanken), "Hanken Grotesk", system-ui, sans-serif;
+  --font-serif: var(--font-bodoni);
+  --font-sans: var(--font-hanken);
 }
 
 /* Ces styles partagés sont utilisés par @apply dans les composants. */

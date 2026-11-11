@@ -2,8 +2,8 @@ import { execFileSync } from "node:child_process";
 import path from "node:path";
 
 const [major, minor] = process.versions.node.split(".").map(Number);
-if (major !== 22 || minor < 23) {
-  console.error(JSON.stringify({ event: "build.rejected", reason: "requires_node_22_23_or_newer_within_22_x", node: process.versions.node }));
+if (!((major === 22 && minor >= 23) || major === 23)) {
+  console.error(JSON.stringify({ event: "build.rejected", reason: "requires_node_22_23_or_newer", node: process.versions.node }));
   process.exit(2);
 }
 
